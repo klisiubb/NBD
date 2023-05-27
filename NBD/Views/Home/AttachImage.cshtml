@@ -1,0 +1,31 @@
+﻿@model ComputerModel
+@{
+    ViewData["Title"] = "Attach Image";
+    var base64Image = ViewBag.Base64Image;
+}
+
+<h2>Attach Image</h2>
+
+@if (Model == null)
+{
+    <p>Computer not found.</p>
+}
+else
+{
+    <p>Computer ID: @Model.Id</p>
+    <p>Computer Name: @Model.Name</p>
+
+    <form asp-action="AttachImage" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="uploadedFile">Upload Image:</label>
+            <input type="file" name="uploadedFile" id="uploadedFile" accept="image/*" />
+        </div>
+        <button type="submit">Attach</button>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.ImageId))
+    {
+        <h4>Attached Image:</h4>
+        <img src="data:image/png;base64,@base64Image" alt="Photo" />
+    }
+}
